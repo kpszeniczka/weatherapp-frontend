@@ -5,9 +5,3 @@ export const formatDate = (dateString: string): string => {
   const year = date.getFullYear();
   return `${day}/${month}/${year}`;
 };
-
-export const getDayName = (dateString: string): string => {
-  const date = new Date(dateString);
-  const days = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
-  return days[date.getDay()];
-};

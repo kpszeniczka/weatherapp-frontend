@@ -1,4 +1,3 @@
-import React from 'react';
 import { CloudRain, Cloud, Sun, CloudSnow, CloudDrizzle, Zap, CloudFog } from 'lucide-react';
 
 export const weatherIcons: { [key: number]: JSX.Element } = {

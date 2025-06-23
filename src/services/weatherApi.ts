@@ -1,11 +1,10 @@
-import { DailyForecast, WeeklySummary, Location, ForecastResponse } from '../types/weather.types';
-
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+import { DailyForecast, WeeklySummary, Location, ForecastResponse } from '../types';
+import { API_BASE_URL } from '../variables';
 
 export const weatherApi = {
-  async getForecast(location: Location): Promise<DailyForecast[]> {
+  async getForecast(location: Location, language: string = 'en'): Promise<DailyForecast[]> {
     const response = await fetch(
-      `${API_BASE_URL}/weather/forecast?latitude=${location.latitude}&longitude=${location.longitude}`
+      `${API_BASE_URL}/weather/forecast?latitude=${location.latitude}&longitude=${location.longitude}&language=${language}`
     );
     
     if (!response.ok) {
@@ -16,9 +15,9 @@ export const weatherApi = {
     return data.forecast;
   },
 
-  async getSummary(location: Location): Promise<WeeklySummary> {
+  async getSummary(location: Location, language: string = 'en'): Promise<WeeklySummary> {
     const response = await fetch(
-      `${API_BASE_URL}/weather/summary?latitude=${location.latitude}&longitude=${location.longitude}`
+      `${API_BASE_URL}/weather/summary?latitude=${location.latitude}&longitude=${location.longitude}&language=${language}`
     );
     
     if (!response.ok) {

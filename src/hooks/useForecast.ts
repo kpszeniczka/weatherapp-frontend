@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { DailyForecast, Location } from '../types/weather.types';
-import { weatherApi } from '../services/weatherApi';
+import { DailyForecast, Location } from '../types';
+import { weatherApi } from '../services';
 
 interface UseForecastResult {
   forecast: DailyForecast[];
@@ -8,7 +8,7 @@ interface UseForecastResult {
   error: string | null;
 }
 
-export const useForecast = (location: Location | null): UseForecastResult => {
+export const useForecast = (location: Location | null, language: string): UseForecastResult => {
   const [forecast, setForecast] = useState<DailyForecast[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +21,7 @@ export const useForecast = (location: Location | null): UseForecastResult => {
       setError(null);
       
       try {
-        const data = await weatherApi.getForecast(location);
+        const data = await weatherApi.getForecast(location, language);
         setForecast(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error while fetching forecast');
@@ -31,7 +31,7 @@ export const useForecast = (location: Location | null): UseForecastResult => {
     };
 
     fetchForecast();
-  }, [location]);
+  }, [location, language]);
 
   return { forecast, loading, error };
 };

@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Location } from '../types/weather.types';
+import { Location } from '../types';
 
 interface UseLocationResult {
   location: Location | null;
   error: string | null;
   loading: boolean;
+  setLocation: (location: Location) => void;
 }
 
 export const useLocation = (): UseLocationResult => {
@@ -51,5 +52,5 @@ export const useLocation = (): UseLocationResult => {
     );
   }, []);
 
-  return { location, error, loading };
+  return { location, error, loading, setLocation };
 };

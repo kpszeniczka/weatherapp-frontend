@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { WeeklySummary, Location } from '../types/weather.types';
-import { weatherApi } from '../services/weatherApi';
+import { WeeklySummary, Location } from '../types';
+import { weatherApi } from '../services';
 
 interface UseSummaryResult {
   summary: WeeklySummary | null;
@@ -8,7 +8,7 @@ interface UseSummaryResult {
   error: string | null;
 }
 
-export const useSummary = (location: Location | null): UseSummaryResult => {
+export const useSummary = (location: Location | null, language: string): UseSummaryResult => {
   const [summary, setSummary] = useState<WeeklySummary | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,11 +21,10 @@ export const useSummary = (location: Location | null): UseSummaryResult => {
       setError(null);
       
       try {
-        const data = await weatherApi.getSummary(location);
-        console.log('Summary data received:', data); // Debug log
+        const data = await weatherApi.getSummary(location, language);
         setSummary(data);
       } catch (err) {
-        console.error('Summary fetch error:', err); // Debug log
+        console.error('Summary fetch error:', err);
         setError(err instanceof Error ? err.message : 'Unknown error while fetching summary');
       } finally {
         setLoading(false);
@@ -33,7 +32,7 @@ export const useSummary = (location: Location | null): UseSummaryResult => {
     };
 
     fetchSummary();
-  }, [location]);
+  }, [location, language]);
 
   return { summary, loading, error };
 };
